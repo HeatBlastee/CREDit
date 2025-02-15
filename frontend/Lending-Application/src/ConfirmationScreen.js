@@ -9,39 +9,38 @@ class ConfirmationScreen extends Component {
   }
 
   handleClick = async () => {
-    this.setState({
-      btnText: "Submitting"
+    this.setState({ btnText: "Submitting" });
+
+    console.log("User ID received in ConfirmationScreen:", this.props.userId); // Debugging log
+
+    if (!this.props.userId) {
+      console.error("Error: userId is undefined in ConfirmationScreen!");
+      return;
+    }
+
+    axios.get(`http://localhost:8000/getdatasession?userid=${this.props.userId}`, {
+      headers: { Accept: 'application/json' }
     })
-   
-    axios.get(`https://bizfizbe.herokuapp.com/getdatasession?userid=${this.props.userId}`, {headers: {
-        Accept: 'application/json'
-      }
-    }).then((res)=>{
-      window.location = "/"
-      this.setState({
-        btnText: "Done"
-      })
-    }).catch((res)=>{
-      window.location = "/"
-      this.setState({
-        btnText: "Done"
-      })
+    .then(() => {
+      this.setState({ btnText: "Done" });
+      window.location = "/";
+    })
+    .catch(() => {
+      this.setState({ btnText: "Done" });
+      window.location = "/";
     });
-   
-    
   }
 
   render() {
     return (
-      <div style={{minHeight:'400px'}}>
-        <h2>Your consent have been submitted successfully.</h2>
+      <div style={{ minHeight: '400px' }}>
+        <h2>Your consent has been submitted successfully.</h2>
         <p>Click confirm to submit the loan application.</p>
         <strong>Thank You!!!</strong>
-        <br/>
-        <br/>
+        <br /><br />
         <RaisedButton label={this.state.btnText} onClick={this.handleClick} primary />
-        <p>After Submitting. Please Wait for a bit. This step may take some time. (10-20 seconds)</p><br/>
-        <p>Also Post Submission, your application will under review for Bank Admin</p>
+        <p>After submitting, please wait. This step may take 10-20 seconds.</p>
+        <p>Post submission, your application will be under review by the bank admin.</p>
       </div>
     );
   }

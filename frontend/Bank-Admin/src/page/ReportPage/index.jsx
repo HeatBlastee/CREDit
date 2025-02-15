@@ -10,7 +10,7 @@ const ReportPage = ({match}) => {
     const [loading, setLoading] = useState(true);
     //const fetchData = async
     const loadData = useCallback(() => {
-        const apiUrl = encodeURI(`https://bizfizbe.herokuapp.com/userinfo?userid=${match.params.reportId}`);
+        const apiUrl = encodeURI(`http://localhost:8000/userinfo?userid=${match.params.reportId}`);
         console.log(apiUrl);
         axios.get(apiUrl)
             .then((res) => {

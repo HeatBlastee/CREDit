@@ -16,7 +16,7 @@ const AllRequestPage = () => {
     const [loading, setLoading] = useState(true);
 
     const loadData = useCallback(() => {
-        const apiUrl = `https://bizfizbe.herokuapp.com/all`;
+        const apiUrl = `http://localhost:8000/all`;
         axios.get(apiUrl)
             .then((res) => {
                 console.log(res.data)
